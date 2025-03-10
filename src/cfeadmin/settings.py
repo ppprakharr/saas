@@ -17,6 +17,25 @@ from decouple import config
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+EMAIL_BACKEND='django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST=config('EMAIL_HOST',default='smtp.gmail.com',cast=str)
+EMAIL_PORT=config('EMAIL_PORT',default='587',cast=str)
+EMAIL_USE_TLS=config('EMAIL_USE_TLS',default=True,cast=bool)
+EMAIL_USE_SSL=config('EMAIL_USE_SSL',default=False,cast=bool)
+EMAIL_HOST_USER=config('EMAIL_HOST_USER',default=None,cast=str)
+EMAIL_HOST_PASSWORD=config('EMAIL_HOST_PASSWORD',default=None,cast=str)
+ADMIN_NAME=config('ADMIN_NAME',default='admin user')
+ADMIN_EMAIL=config('ADMIN_EMAIL',default=None)
+
+MANAGERS=[]
+ADMINS=[]
+
+if all([ADMIN_NAME,ADMIN_EMAIL]):
+    ADMINS+=[
+        (ADMIN_NAME,ADMIN_EMAIL)
+    ]
+MANAGERS=ADMINS
+
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
@@ -40,6 +59,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'commando',
+    'userauth',
+
+    #oauth installation ->allauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
 ]
 
 MIDDLEWARE = [
@@ -49,10 +74,13 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+     "allauth.account.middleware.AccountMiddleware",
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'cfeadmin.urls'
+
+SOCIALACCOUNT_PROVIDERS = {}
 
 TEMPLATES = [
     {
@@ -113,6 +141,21 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+ACCOUNT_LOGIN_METHODS={"email"}
+ACCOUNT_EMAIL_REQUIRED=True
+ACCOUNT_EMAIL_VERIFICATION="mandatory"
+CCOUNT_EMAIL_SUBJECT_PREFIX="[TEST]"
+
+AUTHENTICATION_BACKENDS = [
+    
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by email
+    'allauth.account.auth_backends.AuthenticationBackend',
+   
+]
+
 
 
 # Internationalization
