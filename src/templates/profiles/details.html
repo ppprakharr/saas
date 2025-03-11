@@ -1,0 +1,17 @@
+{% extends 'base.html'%}
+{%load static%}
+{%include 'nav/navbar' %}
+{%block content %}
+    <div>
+        {%if perms.auth.view_user or owner%}
+        <p>
+        <span> First Name: {{profile.first_name}}</span>
+        <span> Last Name: {{profile.last_name}}</span>
+        </p>
+        <p>
+            Last login: {{profile.last_login}}
+        </p>
+        {%else%}
+        <p> You are not authorised to see this page</p>
+        {%endif%}
+{%endblock content %}

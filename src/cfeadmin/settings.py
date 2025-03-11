@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'commando',
     'userauth',
+    'profiles',
 
     #oauth installation ->allauth
     "allauth_ui",

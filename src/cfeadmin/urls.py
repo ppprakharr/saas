@@ -25,6 +25,6 @@ urlpatterns = [
     path('protected/',pw_protected_view),
     path('userauth',include('userauth.urls')),
     path('accounts/', include('allauth.urls')),
-    
+    path('profiles/',include('profiles.urls'))
 
 ]

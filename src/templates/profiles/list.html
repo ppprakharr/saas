@@ -1,0 +1,17 @@
+{% extends 'base.html'%}
+{%load static%}
+{%include 'nav/navbar' %}
+{%block content %}
+    <div>
+        {%if perms.auth.view_user and owner%}
+        {% for u in users%}
+        <p>
+        <a href="{% url 'profiles:profile' u.username %}">{{u.username}}</a>
+        </p>
+        {%endfor%}
+        {%else%}
+        <p> 
+            <a href="{% url 'profiles:profile' owner.username %}">{{owner.username}}</a>
+        </p>
+        {%endif%}
+{%endblock content %}
