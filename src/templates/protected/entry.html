@@ -1,0 +1,9 @@
+{%extends 'base.html'%}
+{%load static%}
+{%block content%}
+    <form method='POST'>
+        {% csrf_token %}
+        <input type='password' name='code' class='form-control' placeholder='enter the code' />
+        <button type='submit'>Submit</button>
+    </form>
+{%endblock content%}

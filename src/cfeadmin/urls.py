@@ -16,11 +16,13 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path,include
+from cfeadmin.views import pw_protected_view
 from cfeadmin import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',views.home),
+    path('protected/',pw_protected_view),
     path('userauth',include('userauth.urls')),
     path('accounts/', include('allauth.urls')),
     

@@ -45,6 +45,7 @@ SECRET_KEY = config('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
+DEBUG_PROPAGATE_EXCEPTIONS = True
 
 ALLOWED_HOSTS = []
 
@@ -52,6 +53,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'django.contrib.sites',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -66,10 +68,13 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
-     "widget_tweaks",
-     "slippers",
+    'allauth.socialaccount.providers.github',
+    "widget_tweaks",
+    "slippers",
 
 ]
+SITE_ID = 1
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -84,7 +89,19 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'cfeadmin.urls'
 
-SOCIALACCOUNT_PROVIDERS = {}
+SOCIALACCOUNT_PROVIDERS = {
+    'github': {
+        # 'APP': {
+        #     'client_id': config("GITHUB_CLIENT_ID"),
+        #     'secret': config("GITHUB_CLIENT_SECRET"),
+        # },
+        'VERIFIED_EMAIL': True,
+        'SCOPE': ['user:email'],
+        'AUTH_PARAMS': {
+            'redirect_uri': 'http://localhost:8000/accounts/github/login/callback/'
+        }
+    }
+}
 
 TEMPLATES = [
     {
@@ -151,6 +168,9 @@ ACCOUNT_EMAIL_VERIFICATION="mandatory"
 ACCOUNT_EMAIL_SUBJECT_PREFIX="[TEST]"
 LOGIN_REDIRECT_URL = '/'
 ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+SOCIALACCOUNT_AUTO_SIGNUP = True 
+SOCIALACCOUNT_EMAIL_REQUIRED = True
+SOCIALACCOUNT_EMAIL_VERIFICATION = "optional"
 
 
 AUTHENTICATION_BACKENDS = [
