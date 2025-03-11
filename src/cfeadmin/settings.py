@@ -62,9 +62,13 @@ INSTALLED_APPS = [
     'userauth',
 
     #oauth installation ->allauth
+    "allauth_ui",
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
+     "widget_tweaks",
+     "slippers",
+
 ]
 
 MIDDLEWARE = [
@@ -144,7 +148,10 @@ AUTH_PASSWORD_VALIDATORS = [
 ACCOUNT_LOGIN_METHODS={"email"}
 ACCOUNT_EMAIL_REQUIRED=True
 ACCOUNT_EMAIL_VERIFICATION="mandatory"
-CCOUNT_EMAIL_SUBJECT_PREFIX="[TEST]"
+ACCOUNT_EMAIL_SUBJECT_PREFIX="[TEST]"
+LOGIN_REDIRECT_URL = '/'
+ACCOUNT_LOGOUT_REDIRECT_URL = '/'
+
 
 AUTHENTICATION_BACKENDS = [
     
